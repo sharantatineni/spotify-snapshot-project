@@ -1,0 +1,98 @@
+<!doctype html>
+<html>
+<head>
+    <title>Spotify Snapshot</title>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="../static/style.css">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
+    
+</head>
+<body>
+    <nav class="navbar navbar-inverse">
+        <div class="container-fluid">
+          <div class="navbar-header">
+            <a class="navbar-brand" href="#">Spotify Snapshot</a>
+          </div>
+          <ul class="nav navbar-nav navbar-right">
+            <li><a href="/logout"><span class="glyphicon glyphicon-log-in"></span> Logout</a></li>
+          </ul>
+        </div>
+      </nav>
+      <div class="container">
+        <main role="main" class="pb-3">
+            <div>
+              <ul class="nav nav-pills nav-justified">
+                <li><a href="{{ url_for('short') }}">Last Month</a></li>
+                <li><a href="{{ url_for('mid') }}">Last 6 Months</a></li>
+                <li><a href="{{ url_for('long') }}">All Time</a></li>
+            </ul>
+                <div class="home jumbotron">
+                  <p> Average Popularity Score ({{ time }})</h1>
+                  <h1> {{ total }}</h1>
+                  <p style="font-size: 120%;"> The higher the score (1-100), the more popular your top artists and songs are on Spotify</p>
+                  </div>
+                <h3>Your top 20 artists' popularity score: {{ avg }}</h2>
+                <div class="top-list">
+                  <table style = "padding-left: 10px;">
+                      <tr>
+                          <td style="vertical-align: middle;"></td>
+                          <td><strong></strong></td>
+                          <td class="space"></td>
+                          <td><img></td>
+                          <td class="space"></td>
+                          <td class="track-detail"><u>Artist</u></td>
+                          <td class="track-detail"><u>Popularity Score</u></td>
+                      </tr>
+                      {% for artist in results %}
+                      <tr>
+                          <td style="vertical-align: middle;">
+                          </td>
+                          <td><strong>{{ loop.index }}</strong></td>
+                          <td class="space"></td>
+                          <td><img src="{{ artist['images'][0]['url'] }}" loading="lazy" class="song-image"></td>
+                          <td class="space"></td>
+                          <td class="track-detail">{{ artist['name'] }}</td>
+                          <td class="track-detail">{{ artist['popularity'] }}</td>
+                      </tr>
+                      {% endfor %}
+                  </table>
+                </div>
+                <h3>Your top 20 songs' popularity score: {{ songavg }}</h2>
+                <div class="top-list">
+                  <table style = "padding-left: 10px;">
+                      <tr>
+                          <td style="vertical-align: middle;"></td>
+                          <td><strong></strong></td>
+                          <td class="space"></td>
+                          <td><img></td>
+                          <td class="space"></td>
+                          <td class="track-detail"><u>Title</u></td>
+                          <td class="track-detail"><u>Popularity Score</u></td>
+                      </tr>
+                      {% for song in songs %}
+                      <tr>
+                          <td style="vertical-align: middle;">
+                          </td>
+                          <td><strong>{{ loop.index }}</strong></td>
+                          <td class="space"></td>
+                          <td><img src="{{ song['album']['images'][0]['url'] }}" loading="lazy" class="song-image"></td>
+                          <td class="space"></td>
+                          <td class="track-detail">{{ song['name'] }} by {{ song['artists'][0]['name'] }}</td>
+                          <td class="track-detail">{{ song['popularity'] }}</td>
+                      </tr>
+                      
+
+                      {% endfor %}
+                  </table>
+                </div>
+
+                
+        </main>
+</div>
+<footer class="container-fluid text-center">
+  <p>Sharan Tatineni ©</p>
+</footer>
+</body>
